@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PG</title>
+    <script src="vendors/angular.min.js"></script>
+    <script src="vendors/angular-route.js"></script>
+    <script src="scripts/client.js"></script>
+    <script src="scripts/controllers/shoe.controller.js"></script>
+    <script src="scripts/services/shoe.service.js"></script>
+
+</head>
+
+<body ng-app="MyApp">
+
+    <h1>Shoe Store</h1>
+
+    <div ng-controller="ShoeController as vm">
+        {{vm.message}}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Cost</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="shoe in vm.shoes.list">
+                    <td>{{shoe.name}}</td>
+                    <td>{{shoe.cost}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>
