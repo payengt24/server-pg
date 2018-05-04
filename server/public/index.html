@@ -19,11 +19,21 @@
     <h1>Shoe Store</h1>
 
     <div ng-controller="ShoeController as vm">
-        {{vm.message}}
+        <form>
+            <label>Shoe Name</label>
+            <input type="text" value="Shoe Name" placeholder="Shoe Name" ng-model="vm.newShoe.name">
+            <label>Cost</label>
+            <input type="text" value="cost" placeholder="Cost" ng-model="vm.newShoe.cost">
+            <button ng-click="vm.addShoe(vm.newShoe)">Submit</button>
+
+            <!-- <pre>{{vm | json }}</pre> -->
+
+        </form>
+
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Shoe Name</th>
                     <th>Cost</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -33,8 +43,21 @@
 
             <tbody>
                 <tr ng-repeat="shoe in vm.shoes.list">
-                    <td>{{shoe.name}}</td>
-                    <td>{{shoe.cost}}</td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="shoe.name" ng-disabled="vm.edit">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="shoe.cost" ng-disabled="vm.edit">
+                    </td>
+
+                    <td>
+                        <button ng-click="vm.editMode()" ng-if="vm.edit">Edit</button>
+                        <button ng-click="vm.updateShoe(shoe)" ng-if="vm.save">Save</button>
+                    </td>
+                    <td>
+                        <button ng-click="vm.deleteShoe(shoe)">Delete</button>
+                    </td>
+
                 </tr>
             </tbody>
         </table>

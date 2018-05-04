@@ -11,8 +11,8 @@ app.use(express.static('server/public'));
 const pool = new Pool({
     database: 'shoe_store', //name of database
     host: 'localhost', //where your database is
-    port: 5432, //this post is on postical,
-    max: 10, //heroku allow 10 try, so this is how many query can run at one time
+    port: 5432, //this port is on postical,
+    max: 10, // allow 10 try, so this is how many query can run at one time
     idleTimeoutMillis: 30000 //30 second to try to connect
 });
 
@@ -61,6 +61,34 @@ app.post('/shoe', (req, res) => {
             console.log('error with SQL insert on shoe POST', error);
             res.sendStatus(500);
         });
+})
+
+app.put('/shoe', (req, res) => {
+    const shoe = req.body
+    pool.query(`UPDATE "shoes" 
+                SET "name" = $1, "cost" = $2    
+                WHERE "id" = $3`, [shoe.name, shoe.cost, shoe.id])
+        .then((results) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('error with SQL insert on shoe PUT', error);
+            res.sendStatus(500);
+        });
+})
+
+app.delete('/shoe', (req, res) => {
+    const shoe = req.query;
+    pool.query(`
+            DELETE FROM "shoes"
+            WHERE "id" = $1`, [shoe.id])
+        .then((results) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('error on delete', error);
+            res.sendStatus(500);
+        })
 })
 
 app.listen(PORT, () => {

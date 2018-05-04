@@ -2,26 +2,24 @@ app.service('ShoeService', function ($http) {
     console.log('ShoeService is loaded')
     var self = this;
 
-    self.shoeList = {list: []};
+    self.shoeList = { list: [] };
+    self.newShoe = { name: '', cost: '' };
 
 
-    // self.shoe = function (shoe) {
-    //     console.log('i am working!!!!')
-    //     $http({
-    //         method: 'POST',
-    //         url: '/shoe',
-    //         data: shoe,
-    //     })
-    //         .then(function (response) {
-    //             console.log(response.data)
-
-    //             self.allShoes();
-    //         })
-    //         .catch(function (error) {
-    //             console.log('error on task POST', error)
-    //         })
-    //     self.allShoes();
-    // }
+    self.addShoe = function (newShoe) {
+        $http({
+            method: 'POST',
+            url: '/shoe',
+            data: newShoe
+        })
+            .then(function (response) {
+                console.log(response);
+                self.allShoes();
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
     self.allShoes = function () {
         $http({
@@ -35,6 +33,36 @@ app.service('ShoeService', function ($http) {
             .catch(function (error) {
                 console.log('this is an error on GET shoe', error)
             });
+    }
+
+
+    self.updateShoe = function (shoeUpdate) {
+        $http({
+            method: 'PUT',
+            url: '/shoe',
+            data: shoeUpdate
+        })
+            .then(function (response) {
+                console.log(response.config.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    self.deleteShoe = function (shoeDelete) {
+        $http({
+            method: 'DELETE',
+            url: '/shoe',
+            params: shoeDelete
+        })
+            .then(function (response) {
+                console.log(response);
+                self.allShoes();
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
     self.allShoes();
